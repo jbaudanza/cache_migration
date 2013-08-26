@@ -31,12 +31,10 @@ old_cache = ActiveSupport::Cache::DalliStore.new(
 
 new_cache = ActiveSupport::Cache::DalliStore.new(
     ENV["NEW_MEMCACHE_SERVERS"].split(","),
-    :username => ENV['NEW_MEMCACE_USERNAME'],
+    :username => ENV['NEW_MEMCACHE_USERNAME'],
     :password => ENV['NEW_MEMCACHE_PASSWORD'])
 
-cache_migrations = CacheMigration.new(new_cache, old_cache)
-
-config.cache_store = cache_migrations
+config.cache_store = CacheMigration.new(new_cache, old_cache)
 ```
 
 This gem was designed to work with DalliStore, but it should work with any API compliant cache store.
